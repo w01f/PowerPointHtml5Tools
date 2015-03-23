@@ -37,19 +37,6 @@
 			this.buttonEditConversionBin = new DevExpress.XtraEditors.ButtonEdit();
 			this.labelControlConversionBin = new DevExpress.XtraEditors.LabelControl();
 			this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
-			this.barButtonItemSave = new DevExpress.XtraBars.BarButtonItem();
-			this.barEditItemSites = new DevExpress.XtraBars.BarEditItem();
-			this.barButtonItemSourceFile = new DevExpress.XtraBars.BarButtonItem();
-			this.barButtonGroupFiles = new DevExpress.XtraBars.BarButtonGroup();
-			this.barButtonItemOpenLibrary = new DevExpress.XtraBars.BarButtonItem();
-			this.barButtonItemOpenLastYearPageViews = new DevExpress.XtraBars.BarButtonItem();
-			this.barButtonItemShutdown = new DevExpress.XtraBars.BarButtonItem();
-			this.barEditItemFolder = new DevExpress.XtraBars.BarEditItem();
-			this.barButtonItemShowSettings = new DevExpress.XtraBars.BarButtonItem();
-			this.barButtonGroup1 = new DevExpress.XtraBars.BarButtonGroup();
-			this.ribbonPageHome = new DevExpress.XtraBars.Ribbon.RibbonPage();
-			this.ribbonPageGroupSiteSettings = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-			this.ribbonPageGroupActions = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
 			this.buttonEditUploadPath = new DevExpress.XtraEditors.ButtonEdit();
 			this.labelControlUploadPath = new DevExpress.XtraEditors.LabelControl();
 			((System.ComponentModel.ISupportInitialize)(this.styleController)).BeginInit();
@@ -141,25 +128,13 @@
 			this.ribbonControl.ButtonGroupsVertAlign = DevExpress.Utils.VertAlignment.Center;
 			this.ribbonControl.ExpandCollapseItem.Id = 0;
 			this.ribbonControl.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.ribbonControl.ExpandCollapseItem,
-            this.barButtonItemSave,
-            this.barEditItemSites,
-            this.barButtonItemSourceFile,
-            this.barButtonGroupFiles,
-            this.barButtonItemOpenLibrary,
-            this.barButtonItemOpenLastYearPageViews,
-            this.barButtonItemShutdown,
-            this.barEditItemFolder,
-            this.barButtonItemShowSettings,
-            this.barButtonGroup1});
+            this.ribbonControl.ExpandCollapseItem});
 			this.ribbonControl.Location = new System.Drawing.Point(0, 0);
 			this.ribbonControl.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.ribbonControl.MaxItemId = 1;
 			this.ribbonControl.MdiMergeStyle = DevExpress.XtraBars.Ribbon.RibbonMdiMergeStyle.Never;
 			this.ribbonControl.Name = "ribbonControl";
 			this.ribbonControl.PageCategoryAlignment = DevExpress.XtraBars.Ribbon.RibbonPageCategoryAlignment.Left;
-			this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
-            this.ribbonPageHome});
 			this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.Office2007;
 			this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
 			this.ribbonControl.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
@@ -168,102 +143,6 @@
 			this.ribbonControl.Size = new System.Drawing.Size(445, 32);
 			this.ribbonControl.Toolbar.ShowCustomizeItem = false;
 			this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
-			// 
-			// barButtonItemSave
-			// 
-			this.barButtonItemSave.Caption = "Save";
-			this.barButtonItemSave.Id = 1;
-			this.barButtonItemSave.Name = "barButtonItemSave";
-			// 
-			// barEditItemSites
-			// 
-			this.barEditItemSites.Caption = "Site              ";
-			this.barEditItemSites.Edit = null;
-			this.barEditItemSites.Id = 2;
-			this.barEditItemSites.Name = "barEditItemSites";
-			this.barEditItemSites.Width = 300;
-			// 
-			// barButtonItemSourceFile
-			// 
-			this.barButtonItemSourceFile.Caption = "Open Source Excel File";
-			this.barButtonItemSourceFile.Id = 3;
-			this.barButtonItemSourceFile.Name = "barButtonItemSourceFile";
-			// 
-			// barButtonGroupFiles
-			// 
-			this.barButtonGroupFiles.Caption = "Files";
-			this.barButtonGroupFiles.Id = 4;
-			this.barButtonGroupFiles.Name = "barButtonGroupFiles";
-			this.barButtonGroupFiles.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			// 
-			// barButtonItemOpenLibrary
-			// 
-			this.barButtonItemOpenLibrary.Caption = "Open Site Folder";
-			this.barButtonItemOpenLibrary.Id = 5;
-			this.barButtonItemOpenLibrary.Name = "barButtonItemOpenLibrary";
-			// 
-			// barButtonItemOpenLastYearPageViews
-			// 
-			this.barButtonItemOpenLastYearPageViews.Caption = "Open Last Year Page Views";
-			this.barButtonItemOpenLastYearPageViews.Id = 6;
-			this.barButtonItemOpenLastYearPageViews.Name = "barButtonItemOpenLastYearPageViews";
-			// 
-			// barButtonItemShutdown
-			// 
-			this.barButtonItemShutdown.Caption = "Shutdown";
-			this.barButtonItemShutdown.Id = 9;
-			this.barButtonItemShutdown.Name = "barButtonItemShutdown";
-			// 
-			// barEditItemFolder
-			// 
-			this.barEditItemFolder.Caption = "Sites Folder:";
-			this.barEditItemFolder.Edit = null;
-			this.barEditItemFolder.Id = 11;
-			this.barEditItemFolder.Name = "barEditItemFolder";
-			this.barEditItemFolder.Width = 300;
-			// 
-			// barButtonItemShowSettings
-			// 
-			this.barButtonItemShowSettings.Caption = "Pacing\r\nand\r\nHyperlinks";
-			this.barButtonItemShowSettings.Id = 12;
-			this.barButtonItemShowSettings.Name = "barButtonItemShowSettings";
-			this.barButtonItemShowSettings.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			// 
-			// barButtonGroup1
-			// 
-			this.barButtonGroup1.Caption = "barButtonGroup1";
-			this.barButtonGroup1.Id = 14;
-			this.barButtonGroup1.Name = "barButtonGroup1";
-			this.barButtonGroup1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-			// 
-			// ribbonPageHome
-			// 
-			this.ribbonPageHome.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
-            this.ribbonPageGroupSiteSettings,
-            this.ribbonPageGroupActions});
-			this.ribbonPageHome.Name = "ribbonPageHome";
-			this.ribbonPageHome.Text = "Home";
-			// 
-			// ribbonPageGroupSiteSettings
-			// 
-			this.ribbonPageGroupSiteSettings.AllowMinimize = false;
-			this.ribbonPageGroupSiteSettings.AllowTextClipping = false;
-			this.ribbonPageGroupSiteSettings.ItemLinks.Add(this.barEditItemFolder);
-			this.ribbonPageGroupSiteSettings.ItemLinks.Add(this.barEditItemSites);
-			this.ribbonPageGroupSiteSettings.ItemLinks.Add(this.barButtonItemSave);
-			this.ribbonPageGroupSiteSettings.ItemLinks.Add(this.barButtonItemSourceFile, true);
-			this.ribbonPageGroupSiteSettings.ItemLinks.Add(this.barButtonItemOpenLibrary);
-			this.ribbonPageGroupSiteSettings.ItemLinks.Add(this.barButtonItemOpenLastYearPageViews);
-			this.ribbonPageGroupSiteSettings.ItemLinks.Add(this.barButtonItemShowSettings, true);
-			this.ribbonPageGroupSiteSettings.Name = "ribbonPageGroupSiteSettings";
-			this.ribbonPageGroupSiteSettings.ShowCaptionButton = false;
-			this.ribbonPageGroupSiteSettings.Text = "Site Settings";
-			// 
-			// ribbonPageGroupActions
-			// 
-			this.ribbonPageGroupActions.ItemLinks.Add(this.barButtonItemShutdown);
-			this.ribbonPageGroupActions.Name = "ribbonPageGroupActions";
-			this.ribbonPageGroupActions.ShowCaptionButton = false;
 			// 
 			// buttonEditUploadPath
 			// 
@@ -330,19 +209,6 @@
 		private DevExpress.XtraEditors.ButtonEdit buttonEditConversionBin;
 		private DevExpress.XtraEditors.LabelControl labelControlConversionBin;
 		private DevExpress.XtraBars.Ribbon.RibbonControl ribbonControl;
-		private DevExpress.XtraBars.BarButtonItem barButtonItemSave;
-		private DevExpress.XtraBars.BarEditItem barEditItemSites;
-		private DevExpress.XtraBars.BarButtonItem barButtonItemSourceFile;
-		private DevExpress.XtraBars.BarButtonGroup barButtonGroupFiles;
-		private DevExpress.XtraBars.BarButtonItem barButtonItemOpenLibrary;
-		private DevExpress.XtraBars.BarButtonItem barButtonItemOpenLastYearPageViews;
-		private DevExpress.XtraBars.BarButtonItem barButtonItemShutdown;
-		private DevExpress.XtraBars.BarEditItem barEditItemFolder;
-		private DevExpress.XtraBars.BarButtonItem barButtonItemShowSettings;
-		private DevExpress.XtraBars.BarButtonGroup barButtonGroup1;
-		private DevExpress.XtraBars.Ribbon.RibbonPage ribbonPageHome;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupSiteSettings;
-		private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroupActions;
 		private DevExpress.XtraEditors.ButtonEdit buttonEditUploadPath;
 		private DevExpress.XtraEditors.LabelControl labelControlUploadPath;
 	}

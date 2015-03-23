@@ -121,15 +121,15 @@
     <value>(function( $ ){
     $(document).ready(function() 
     {
-		var activityActionUrl = '{:siteUrl}' + '/ISpringPublic/writeActivity'
+		var activityActionUrl = '{:siteUrl}' + '/activity/write'
 		window.onbeforeunload =  function () { 
 			$.ajax({
-				type: "POST",
+				type: "PUT",
 				url: activityActionUrl,
 				data: {
 					type: 'Public Presentation',
 					subType: 'Close',
-					data: $.toJSON({
+					details: $.toJSON({
 						Site: window.location.href,
 						Name: $('head title').text()
 					})
@@ -139,13 +139,13 @@
 			});   
 		};
 		$.ajax({
-			type: "POST",
+			type: "PUT",
 			url: activityActionUrl,
 			data: {
 				type: 'Public Presentation',
 				subType: 'Open',
-				recipients: '{:emails}',
-				data: $.toJSON({
+				notificationRecipients: '{:emails}',
+				details: $.toJSON({
 					Site: window.location.href,
 					Name: $('head title').text()
 				})

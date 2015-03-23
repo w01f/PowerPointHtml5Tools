@@ -64,15 +64,15 @@ namespace iSpringSiteTuner.Properties {
         ///   Looks up a localized string similar to (function( $ ){
         ///    $(document).ready(function() 
         ///    {
-        ///		var activityActionUrl = &apos;{:siteUrl}&apos; + &apos;/ISpringPublic/writeActivity&apos;
+        ///		var activityActionUrl = &apos;{:siteUrl}&apos; + &apos;/activity/write&apos;
         ///		window.onbeforeunload =  function () { 
         ///			$.ajax({
-        ///				type: &quot;POST&quot;,
+        ///				type: &quot;PUT&quot;,
         ///				url: activityActionUrl,
         ///				data: {
         ///					type: &apos;Public Presentation&apos;,
         ///					subType: &apos;Close&apos;,
-        ///					data: $.toJSON({
+        ///					details: $.toJSON({
         ///						Site: window.location.href,
         ///						Name: $(&apos;head title&apos;).text()
         ///					})
@@ -82,8 +82,8 @@ namespace iSpringSiteTuner.Properties {
         ///			});   
         ///		};
         ///		$.ajax({
-        ///			type: &quot;POST&quot;,
-        ///			ur [rest of string was truncated]&quot;;.
+        ///			type: &quot;PUT&quot;,
+        ///			url: activityA [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ActivityFileContent {
             get {

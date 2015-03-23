@@ -1,0 +1,17 @@
+﻿using System;
+
+namespace SiteManager.Business.Models.RawActivityData
+{
+	class RawActivityDetail
+	{
+		public string tag { get; set; }
+		public string value { get; set; }
+
+		public override string ToString()
+		{
+			if (!String.IsNullOrEmpty(tag))
+				return String.Format("{0}: {1}", tag, value);
+			return null;
+		}
+	}
+}
