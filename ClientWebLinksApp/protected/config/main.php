@@ -5,6 +5,8 @@
 		'defaultController' => 'site',
 		'preload' => array('log'),
 		'import' => array(
+			'application.components.*',
+			'application.models.common.*',
 			'application.models.activity.entity.*',
 			'application.models.activity.model.*',
 		),
@@ -41,7 +43,7 @@
 			),
 		),
 		'params' => array(
-			'appRoot' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..'. DIRECTORY_SEPARATOR . '..',
-			'mysqlDateFormat'=>'Y-m-d H:i:s',
+			'appRoot' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..',
+			'mysqlDateFormat' => 'Y-m-d H:i:s',
 		),
 	);

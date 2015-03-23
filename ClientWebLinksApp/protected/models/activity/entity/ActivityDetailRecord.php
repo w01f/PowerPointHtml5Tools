@@ -27,13 +27,13 @@
 
 		/**
 		 * @param $activityId string
-		 * @param $activityData array
+		 * @param $activityDetails array
 		 */
-		public static function WriteActivityDetail($activityId, $activityData)
+		public static function WriteActivityDetails($activityId, $activityDetails)
 		{
-			if (isset($activityData) && is_array($activityData))
+			if (isset($activityDetails) && is_array($activityDetails))
 			{
-				foreach ($activityData as $tag => $data)
+				foreach ($activityDetails as $tag => $data)
 				{
 					if (isset($data))
 					{
