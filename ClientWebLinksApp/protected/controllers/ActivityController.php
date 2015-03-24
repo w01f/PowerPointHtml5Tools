@@ -8,22 +8,20 @@
 			$subType = Yii::app()->request->getPut('subType');
 			$details = Yii::app()->request->getPut('details');
 			$notificationRecipients = Yii::app()->request->getPut('notificationRecipients');
-			if (isset($details))
-				$details = CJSON::decode($details);
-			else
+			if (!isset($details))
 			{
 				$this->renderJSON(ResponseCode::$BadRequest);
 				return;
 			}
-
+			$details['Advertiser'] = str_replace("\'", "'", $details['Advertiser']);
 			if (isset($notificationRecipients) && $notificationRecipients != '')
 			{
 				$ip = Yii::app()->request->getUserHostAddress();
 				$message = Yii::app()->email;
 				$message->to = explode(";", $notificationRecipients);
-				$message->subject = 'Someone just viewed your presentation';
+				$message->subject = $details['Advertiser'];
 				$message->from = Yii::app()->params['email']['from'];
-				$message->message = 'Someone just viewed a site: ' . $details['Name'] . '(' . $details['Site'] . ')' .
+				$message->message = 'Someone just viewed your client presentation for: ' . $details['Advertiser'] .
 					'<br>IP Address: ' . $ip;
 				$message->send();
 			}

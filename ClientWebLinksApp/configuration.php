@@ -9,6 +9,9 @@
 		require($internalConfig), array(
 			'name' => 'This is custom site name',
 			'params' => array(
+				'email' => array(
+					'from' => 'clientweblink@adSALESapps.com',
+				),
 			),
 			'components' => array(
 				'db' => array(
