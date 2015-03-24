@@ -9,11 +9,17 @@ namespace iSpringSiteTuner
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main()
+		static void Main(string[] args)
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormMain());
+			var silent = args != null && args.Length > 0 && args[0].ToUpper().Equals("SILENT");
+			if (!silent)
+			{
+				Application.EnableVisualStyles();
+				Application.SetCompatibleTextRenderingDefault(false);
+				Application.Run(new FormMain());
+			}
+			else
+				AppManager.ProcessSitesSilent();
 		}
 	}
 }

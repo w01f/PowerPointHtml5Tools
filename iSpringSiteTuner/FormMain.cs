@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml;
 using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraEditors;
 using iSpringSiteTuner.Properties;
@@ -13,47 +11,19 @@ namespace iSpringSiteTuner
 {
 	public partial class FormMain : RibbonForm
 	{
-		private const string SitesSourceFileName = "Sites.xml";
-
-		private readonly string _rootPath;
 		private bool _processValidation;
+
 		public FormMain()
 		{
-			_rootPath = Path.GetDirectoryName(GetType().Assembly.Location);
 			InitializeComponent();
 		}
-
-		private IEnumerable<ConnectionSettings> GetSites()
-		{
-			var filePath = Path.Combine(_rootPath, SitesSourceFileName);
-			if (!File.Exists(filePath)) return new ConnectionSettings[] { };
-			var document = new XmlDocument();
-			document.Load(filePath);
-			return document
-				.SelectNodes(@"/Sites/Site")
-				.OfType<XmlNode>()
-				.Select(node => new ConnectionSettings
-				{
-					Url = node.SelectSingleNode(@"Url").InnerText,
-					Login = node.SelectSingleNode(@"User").InnerText,
-					Password = node.SelectSingleNode(@"Password").InnerText
-				});
-		}
-
 
 		private bool ProcessSites()
 		{
 			var conversionBinPath = buttonEditConversionBin.EditValue as String;
 			var uploadPath = buttonEditUploadPath.EditValue as String;
 			var connection = comboBoxEditSiteUrl.EditValue as ConnectionSettings;
-			var result = true;
-			foreach (var siteFolder in Directory.GetDirectories(conversionBinPath)
-				.Where(SiteFolder.IsSiteFolder)
-				.Select(item => new SiteFolder(item)))
-			{
-				result &= siteFolder.Process(uploadPath, connection);
-			}
-			return result;
+			return AppManager.ProcessSites(conversionBinPath, uploadPath, connection);
 		}
 
 		private void FormMain_Load(object sender, EventArgs e)
@@ -66,7 +36,7 @@ namespace iSpringSiteTuner
 			if (!String.IsNullOrEmpty(uploadPath))
 				buttonEditUploadPath.EditValue = uploadPath;
 
-			comboBoxEditSiteUrl.Properties.Items.AddRange(GetSites().ToArray());
+			comboBoxEditSiteUrl.Properties.Items.AddRange(AppManager.GetSites().ToArray());
 			if (comboBoxEditSiteUrl.Properties.Items.Count > 0)
 				comboBoxEditSiteUrl.SelectedIndex = 0;
 		}
@@ -91,7 +61,6 @@ namespace iSpringSiteTuner
 			buttonEditUploadPath.Focus();
 			comboBoxEditSiteUrl.Focus();
 
-			_processValidation = true;
 			var valid = ValidateChildren();
 			_processValidation = false;
 			if (!valid)

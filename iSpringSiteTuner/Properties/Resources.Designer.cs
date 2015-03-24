@@ -72,18 +72,18 @@ namespace iSpringSiteTuner.Properties {
         ///				data: {
         ///					type: &apos;Public Presentation&apos;,
         ///					subType: &apos;Close&apos;,
-        ///					details: $.toJSON({
+        ///					details: {
         ///						Site: window.location.href,
-        ///						Name: $(&apos;head title&apos;).text()
-        ///					})
+        ///						Name: $(&apos;head title&apos;).text(), 
+        ///						Advertiser: &apos;{:advertiser}&apos;
+        ///					}
         ///				},
         ///				async: false,
         ///				dataType: &apos;json&apos;
         ///			});   
         ///		};
         ///		$.ajax({
-        ///			type: &quot;PUT&quot;,
-        ///			url: activityA [rest of string was truncated]&quot;;.
+        ///			type [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ActivityFileContent {
             get {

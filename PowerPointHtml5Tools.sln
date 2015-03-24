@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSpringSiteTuner", "iSpring
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SiteManager", "SiteManager\SiteManager.csproj", "{A5A4018B-405E-43D1-87BE-8C118AF12081}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DropBoxUploader", "DropBoxUploader\DropBoxUploader.csproj", "{02C56361-66C5-4958-B086-91B68C2DBFF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSpringSiteTunerSilent", "iSpringSiteTunerSilent\iSpringSiteTunerSilent.csproj", "{30B88793-745F-4D13-8865-800C51366880}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A5A4018B-405E-43D1-87BE-8C118AF12081}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5A4018B-405E-43D1-87BE-8C118AF12081}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5A4018B-405E-43D1-87BE-8C118AF12081}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02C56361-66C5-4958-B086-91B68C2DBFF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02C56361-66C5-4958-B086-91B68C2DBFF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02C56361-66C5-4958-B086-91B68C2DBFF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02C56361-66C5-4958-B086-91B68C2DBFF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30B88793-745F-4D13-8865-800C51366880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30B88793-745F-4D13-8865-800C51366880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30B88793-745F-4D13-8865-800C51366880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30B88793-745F-4D13-8865-800C51366880}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

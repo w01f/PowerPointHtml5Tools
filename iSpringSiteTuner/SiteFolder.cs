@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using Limilabs.FTP.Client;
 
 namespace iSpringSiteTuner
@@ -14,6 +13,7 @@ namespace iSpringSiteTuner
 		private const string SourceFolderSuffix = "_cwl";
 		private const string WebContentSuffix = "(Web)";
 
+		private const string AdvertiserFileName = "advertiser.txt";
 		private const string DestinationFileName = "destination.txt";
 		private const string EmailFileName = "email.txt";
 		private const string LogFileName = "log.txt";
@@ -26,6 +26,7 @@ namespace iSpringSiteTuner
 
 		private const string SitePathPlaceHolder = "{:siteUrl}";
 		private const string EmailPlaceHolder = "{:emails}";
+		private const string AdvertiserPlaceHolder = "{:advertiser}";
 
 		private const string SiteRootFolder = "html5link";
 		private const string FtpRootFolder = "public_html/html5link";
@@ -33,12 +34,18 @@ namespace iSpringSiteTuner
 
 		private readonly string _sourcePath;
 
+		private string _advertiserName;
 		private string _webLocationFolderName;
 		private readonly List<string> _emails = new List<string>();
 
 		private string Name
 		{
-			get { return Path.GetFileName(_sourcePath).Replace(SourceFolderSuffix, String.Empty); }
+			get
+			{
+				return Path.GetFileName(_sourcePath)
+					.Replace(SourceFolderSuffix, String.Empty)
+					.Replace(String.Format("{0}_", _webLocationFolderName), String.Empty);
+			}
 		}
 
 		private string WebContentFolderName
@@ -49,6 +56,7 @@ namespace iSpringSiteTuner
 		public SiteFolder(string sourcePath)
 		{
 			_sourcePath = sourcePath;
+			LoadAdvertiser();
 			LoadEmailSettings();
 			LoadWebLocationFolderName();
 		}
@@ -60,6 +68,7 @@ namespace iSpringSiteTuner
 				return false;
 			var containedFiles = Directory.GetFiles(folderPath).ToList();
 			return Directory.GetDirectories(folderPath, String.Format("*{0}", WebContentSuffix)).Any() &&
+				containedFiles.Any(f => String.Equals(Path.GetFileName(f), AdvertiserFileName)) &&
 				containedFiles.Any(f => String.Equals(Path.GetFileName(f), DestinationFileName)) &&
 				containedFiles.Any(f => String.Equals(Path.GetFileName(f), EmailFileName));
 		}
@@ -117,6 +126,7 @@ namespace iSpringSiteTuner
 				var activityFileContent = Properties.Resources.ActivityFileContent;
 				activityFileContent = activityFileContent.Replace(SitePathPlaceHolder, connection.Url);
 				activityFileContent = activityFileContent.Replace(EmailPlaceHolder, String.Join(";", _emails));
+				activityFileContent = activityFileContent.Replace(AdvertiserPlaceHolder, _advertiserName.Replace("'", @"\'"));
 				File.WriteAllText(Path.Combine(dataFolderPath, ActivityFileName), activityFileContent);
 				processLog.AppendLine(String.Format("File added {0}", ActivityFileName));
 
@@ -160,8 +170,12 @@ namespace iSpringSiteTuner
 				processLog.AppendLine("Web Folder uploaded with web services to clientweblink.com");
 
 				OutlookHelper.Instance.SendMessage(
-					"HTML5 presentation ready",
-					String.Format("Your HTML5 Presentation link is ready:{1}{1}{0}",
+					String.Format("HTML5 presentation ready for {0}", _advertiserName),
+					String.Format("Your HTML5 Web Link is ready for: {0}{2}" +
+								  "Copy the url below and email it to your client.{2}{1}{2}{2}" +
+								  "*Please Note:{2}You will receive a confirmation email each time someone views this presentation.{2}{2}{2}" +
+								  "If you have any technical issues with your HTML5 web link, then email:{2}billy@adSALESapps.com",
+						_advertiserName,
 						String.Format("{0}/{1}/{2}/{3}/{4}", connection.Url, SiteRootFolder, _webLocationFolderName, convertedFolderName, IndexFileName),
 						Environment.NewLine),
 					_emails);
@@ -183,6 +197,14 @@ namespace iSpringSiteTuner
 				File.WriteAllText(logFilePath, processLog.ToString());
 			}
 			return completedSuccessFully;
+		}
+
+		private void LoadAdvertiser()
+		{
+			var advertiserSettingsFile = Path.Combine(_sourcePath, AdvertiserFileName);
+			if (!File.Exists(advertiserSettingsFile))
+				throw new FileNotFoundException(String.Format("{0} not found", AdvertiserFileName));
+			_advertiserName = File.ReadAllText(advertiserSettingsFile);
 		}
 
 		private void LoadEmailSettings()
@@ -211,52 +233,6 @@ namespace iSpringSiteTuner
 				new String(Enumerable.Repeat(chars, 2).Select(s => s[random.Next(s.Length)]).ToArray()),
 				new String(Enumerable.Repeat(digits, 3).Select(s => s[random.Next(s.Length)]).ToArray()),
 				new String(Enumerable.Repeat(chars, 2).Select(s => s[random.Next(s.Length)]).ToArray()));
-		}
-
-		private static void DeleteFolder(string folderPath)
-		{
-			try
-			{
-				foreach (var subFolderPath in Directory.GetDirectories(folderPath))
-					DeleteFolder(subFolderPath);
-				foreach (var filePath in Directory.GetFiles(folderPath))
-				{
-					try
-					{
-						if (File.Exists(filePath))
-						{
-							File.SetAttributes(filePath, FileAttributes.Normal);
-							File.Delete(filePath);
-						}
-					}
-					catch
-					{
-						try
-						{
-							Thread.Sleep(100);
-							if (File.Exists(filePath))
-								File.Delete(filePath);
-						}
-						catch { }
-					}
-				}
-				try
-				{
-					if (Directory.Exists(folderPath))
-						Directory.Delete(folderPath, false);
-				}
-				catch
-				{
-					try
-					{
-						Thread.Sleep(100);
-						if (Directory.Exists(folderPath))
-							Directory.Delete(folderPath, false);
-					}
-					catch { }
-				}
-			}
-			catch { }
 		}
 	}
 }
