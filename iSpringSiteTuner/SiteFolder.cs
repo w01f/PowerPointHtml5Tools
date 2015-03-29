@@ -17,16 +17,24 @@ namespace iSpringSiteTuner
 		private const string DestinationFileName = "destination.txt";
 		private const string EmailFileName = "email.txt";
 		private const string LogFileName = "log.txt";
+		private const string IdFileName = "id.txt";
 
-		private const string IndexFileName = "index.html";
+		private const string OriginalIndexFileName = "index.html";
+		private const string PublicIndexFileName = "public.html";
+		private const string LoginIndexFileName = "login.html";
 		private const string DataFolderName = "data";
-		private const string ActivityFileName = "activity.js";
+		private const string ActivityRegularFileName = "activity-regular.js";
+		private const string ActivityLoginFileName = "activity-login.js";
 		private const string JqueryFileName = "jquery.js";
 		private const string JsonFileName = "json.js";
+		private const string MetroNotificationScriptFileName = "metro-notification.js";
+		private const string MetroNotificationStyleFileName = "metro-notification.css";
+		private const string FontAwesomeStyleFileName = "font-awesome.css";
 
 		private const string SitePathPlaceHolder = "{:siteUrl}";
 		private const string EmailPlaceHolder = "{:emails}";
 		private const string AdvertiserPlaceHolder = "{:advertiser}";
+		private const string FileNamePlaceHolder = "{:file}";
 
 		private const string SiteRootFolder = "html5link";
 		private const string FtpRootFolder = "public_html/html5link";
@@ -36,6 +44,7 @@ namespace iSpringSiteTuner
 
 		private string _advertiserName;
 		private string _webLocationFolderName;
+		private string _id;
 		private readonly List<string> _emails = new List<string>();
 
 		private string Name
@@ -44,6 +53,7 @@ namespace iSpringSiteTuner
 			{
 				return Path.GetFileName(_sourcePath)
 					.Replace(SourceFolderSuffix, String.Empty)
+					.Replace(String.Format("_{0}", _id), String.Empty)
 					.Replace(String.Format("{0}_", _webLocationFolderName), String.Empty);
 			}
 		}
@@ -56,6 +66,7 @@ namespace iSpringSiteTuner
 		public SiteFolder(string sourcePath)
 		{
 			_sourcePath = sourcePath;
+			LoadId();
 			LoadAdvertiser();
 			LoadEmailSettings();
 			LoadWebLocationFolderName();
@@ -68,6 +79,7 @@ namespace iSpringSiteTuner
 				return false;
 			var containedFiles = Directory.GetFiles(folderPath).ToList();
 			return Directory.GetDirectories(folderPath, String.Format("*{0}", WebContentSuffix)).Any() &&
+				containedFiles.Any(f => String.Equals(Path.GetFileName(f), IdFileName)) &&
 				containedFiles.Any(f => String.Equals(Path.GetFileName(f), AdvertiserFileName)) &&
 				containedFiles.Any(f => String.Equals(Path.GetFileName(f), DestinationFileName)) &&
 				containedFiles.Any(f => String.Equals(Path.GetFileName(f), EmailFileName));
@@ -95,7 +107,7 @@ namespace iSpringSiteTuner
 					.Replace("  ", " ")
 					.Replace(" ", "_")
 					.Replace("(", "")
-					.Replace(")", "") + GenerateRandomNameSuffix())
+					.Replace(")", "") + _id)
 					.ToLower();
 
 				var destinationFolderPath = Path.Combine(_sourcePath, convertedFolderName);
@@ -123,18 +135,38 @@ namespace iSpringSiteTuner
 				File.WriteAllText(Path.Combine(dataFolderPath, JsonFileName), Properties.Resources.JSonFileContent);
 				processLog.AppendLine(String.Format("File added {0}", JsonFileName));
 
-				var activityFileContent = Properties.Resources.ActivityFileContent;
-				activityFileContent = activityFileContent.Replace(SitePathPlaceHolder, connection.Url);
-				activityFileContent = activityFileContent.Replace(EmailPlaceHolder, String.Join(";", _emails));
-				activityFileContent = activityFileContent.Replace(AdvertiserPlaceHolder, _advertiserName.Replace("'", @"\'"));
-				File.WriteAllText(Path.Combine(dataFolderPath, ActivityFileName), activityFileContent);
-				processLog.AppendLine(String.Format("File added {0}", ActivityFileName));
+				File.WriteAllText(Path.Combine(dataFolderPath, MetroNotificationScriptFileName), Properties.Resources.MetroNotificationScriptFileContent);
+				processLog.AppendLine(String.Format("File added {0}", MetroNotificationScriptFileName));
 
-				var indexFilePath = Path.Combine(destinationFolderPath, IndexFileName);
-				if (!File.Exists(indexFilePath))
+				File.WriteAllText(Path.Combine(dataFolderPath, MetroNotificationStyleFileName), Properties.Resources.MetroNotificationStyleFileContent);
+				processLog.AppendLine(String.Format("File added {0}", MetroNotificationStyleFileName));
+
+				File.WriteAllText(Path.Combine(dataFolderPath, FontAwesomeStyleFileName), Properties.Resources.FontAwesomeStyleContent);
+				processLog.AppendLine(String.Format("File added {0}", FontAwesomeStyleFileName));
+
+				var activityRegularFileContent = Properties.Resources.ActivityRegularFileContent;
+				activityRegularFileContent = activityRegularFileContent.Replace(SitePathPlaceHolder, connection.Url);
+				activityRegularFileContent = activityRegularFileContent.Replace(EmailPlaceHolder, String.Join(";", _emails));
+				activityRegularFileContent = activityRegularFileContent.Replace(AdvertiserPlaceHolder, _advertiserName.Replace("'", @"\'"));
+				File.WriteAllText(Path.Combine(dataFolderPath, ActivityRegularFileName), activityRegularFileContent);
+				processLog.AppendLine(String.Format("File added {0}", ActivityRegularFileName));
+
+				var activityLoginFileContent = Properties.Resources.ActivityLoginFileContent;
+				activityLoginFileContent = activityLoginFileContent.Replace(AdvertiserPlaceHolder, _advertiserName.Replace("'", @"\'"));
+				activityLoginFileContent = activityLoginFileContent.Replace(FileNamePlaceHolder, String.Format("{0}.pptx", Name));
+				File.WriteAllText(Path.Combine(dataFolderPath, ActivityLoginFileName), activityLoginFileContent);
+				processLog.AppendLine(String.Format("File added {0}", ActivityLoginFileName));
+
+				File.WriteAllText(Path.Combine(destinationFolderPath, LoginIndexFileName), Properties.Resources.LoginIndexFileContent);
+				processLog.AppendLine(String.Format("File added {0}", LoginIndexFileName));
+
+				var originalIndexFilePath = Path.Combine(destinationFolderPath, OriginalIndexFileName);
+				var publicIndexFilePath = Path.Combine(destinationFolderPath, PublicIndexFileName);
+				if (!File.Exists(originalIndexFilePath))
 					throw new FileNotFoundException(String.Format("Site Index file not found"));
 
-				var indexFileContent = File.ReadAllText(indexFilePath);
+				var indexFileContent = File.ReadAllText(originalIndexFilePath);
+				File.Delete(originalIndexFilePath);
 
 				var originalHeadContent = String.Empty;
 				var matches = Regex.Matches(indexFileContent, @"<head>([.\S+\n\r\s]*?)<\/head>");
@@ -142,10 +174,10 @@ namespace iSpringSiteTuner
 					originalHeadContent = matches[0].Groups[1].Value;
 				if (!String.IsNullOrEmpty(originalHeadContent))
 				{
-					if (!originalHeadContent.Contains(Properties.Resources.IndexScriptIncludePart))
+					if (!originalHeadContent.Contains(Properties.Resources.PublicIndexScriptIncludePart))
 					{
-						var modifiedHeadContent = String.Format("{0}{2}{1}", originalHeadContent, Properties.Resources.IndexScriptIncludePart, Environment.NewLine);
-						File.WriteAllText(indexFilePath, indexFileContent.Replace(originalHeadContent, modifiedHeadContent));
+						var modifiedHeadContent = String.Format("{0}{2}{1}", originalHeadContent, Properties.Resources.PublicIndexScriptIncludePart, Environment.NewLine);
+						File.WriteAllText(publicIndexFilePath, indexFileContent.Replace(originalHeadContent, modifiedHeadContent));
 					}
 				}
 				processLog.AppendLine("Web Folder html file new code added");
@@ -171,12 +203,14 @@ namespace iSpringSiteTuner
 
 				OutlookHelper.Instance.SendMessage(
 					String.Format("HTML5 presentation ready for {0}", _advertiserName),
-					String.Format("Your HTML5 Web Link is ready for: {0}{2}" +
-								  "Copy the url below and email it to your client.{2}{1}{2}{2}" +
-								  "*Please Note:{2}You will receive a confirmation email each time someone views this presentation.{2}{2}{2}" +
-								  "If you have any technical issues with your HTML5 web link, then email:{2}billy@adSALESapps.com",
+					String.Format("Your HTML5 Web Link is ready for: {0}{3}{3}" +
+								  "Public URL{3}{1}{3}{3}" +
+								  "Client Login URL{3}{2}{3}{3}" +
+								  "*Please Note:{3}You will receive a confirmation email each time someone views this presentation.{3}{3}{3}" +
+								  "If you have any technical issues with your HTML5 web link, then email:{3}billy@adSALESapps.com",
 						_advertiserName,
-						String.Format("{0}/{1}/{2}/{3}/{4}", connection.Url, SiteRootFolder, _webLocationFolderName, convertedFolderName, IndexFileName),
+						String.Format("{0}/{1}/{2}/{3}/{4}", connection.Url, SiteRootFolder, _webLocationFolderName, convertedFolderName, PublicIndexFileName),
+						String.Format("{0}/{1}/{2}/{3}/{4}", connection.Url, SiteRootFolder, _webLocationFolderName, convertedFolderName, LoginIndexFileName),
 						Environment.NewLine),
 					_emails);
 				processLog.AppendLine(String.Format("Confirmation email with URL sent to {0}", String.Join(";", _emails)));
@@ -197,6 +231,14 @@ namespace iSpringSiteTuner
 				File.WriteAllText(logFilePath, processLog.ToString());
 			}
 			return completedSuccessFully;
+		}
+
+		private void LoadId()
+		{
+			var idFile = Path.Combine(_sourcePath, IdFileName);
+			if (!File.Exists(idFile))
+				throw new FileNotFoundException(String.Format("{0} not found", IdFileName));
+			_id = File.ReadAllText(idFile);
 		}
 
 		private void LoadAdvertiser()
@@ -222,17 +264,6 @@ namespace iSpringSiteTuner
 			if (!File.Exists(destinationSettingsFile))
 				throw new FileNotFoundException(String.Format("{0} not found", DestinationFileName));
 			_webLocationFolderName = File.ReadAllText(destinationSettingsFile);
-		}
-
-		private static string GenerateRandomNameSuffix()
-		{
-			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			const string digits = "0123456789";
-			var random = new Random();
-			return String.Format("{0}{1}{2}",
-				new String(Enumerable.Repeat(chars, 2).Select(s => s[random.Next(s.Length)]).ToArray()),
-				new String(Enumerable.Repeat(digits, 3).Select(s => s[random.Next(s.Length)]).ToArray()),
-				new String(Enumerable.Repeat(chars, 2).Select(s => s[random.Next(s.Length)]).ToArray()));
 		}
 	}
 }

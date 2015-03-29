@@ -18,7 +18,29 @@ namespace DropBoxUploader
 		{
 			InitializeComponent();
 			_filePath = filePath;
-			labelControlFileName.Text = String.Format(labelControlFileName.Text, Path.GetFileName(_filePath));
+
+			var fileName = Path.GetFileName(_filePath);
+			var fileSize = new FileInfo(_filePath).Length;
+			string fileSizeUnit;
+			var showSizeWarning = false;
+			if (fileSize > (1024 * 1024))
+			{
+				fileSizeUnit = "Mb";
+				fileSize = fileSize / (1024 * 1024);
+				showSizeWarning = fileSize > 20;
+			}
+			else if (fileSize > 1024)
+			{
+				fileSizeUnit = "Kb";
+				fileSize = fileSize / 1024;
+			}
+			else
+				fileSizeUnit = "b";
+			labelControlFileName.Text = String.Format(labelControlFileName.Text,
+				fileName,
+				String.Format("{0} {1}", fileSize, fileSizeUnit));
+			labelControlFileSizeWarning.Visible = showSizeWarning;
+
 			if (!String.IsNullOrEmpty(Properties.Settings.Default.Email))
 			{
 				textEditEmail1.EditValue = Properties.Settings.Default.Email;
@@ -91,10 +113,10 @@ namespace DropBoxUploader
 			var valid = ValidateChildren();
 			_processValidation = false;
 			if (!valid) return;
-			
+
 			Properties.Settings.Default.Email = textEditEmail1.EditValue as String;
 			Properties.Settings.Default.Save();
-			
+
 			DialogResult = DialogResult.OK;
 			Close();
 		}

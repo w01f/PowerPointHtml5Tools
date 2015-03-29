@@ -16,6 +16,7 @@ namespace DropBoxUploader.Business
 		private const string FtpDestinationFileName = "destination.txt";
 		private const string AdvertiserFileName = "advertiser.txt";
 		private const string EmailFileName = "email.txt";
+		private const string IdFileName = "id.txt";
 
 		private const string NotificationRecipientsFileName = "notification_recipients.txt";
 		private const string SMTPAddress = "smtp.office365.com";
@@ -36,14 +37,17 @@ namespace DropBoxUploader.Business
 		{
 			var appRootFolderPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
+			var fileSetId = RandomIdGenerator.GetBase36(7).ToLower();
+
 			var ftpDestinationName = String.Empty;
 			var ftpDestinationFilePath = Path.Combine(appRootFolderPath, FtpDestinationFileName);
 			if (File.Exists(ftpDestinationFilePath))
 				ftpDestinationName = File.ReadAllText(ftpDestinationFilePath).Trim();
 
-			var fileSetName = String.Format("{0}{1}_cwl",
+			var fileSetName = String.Format("{0}{1}_{2}_cwl",
 				!String.IsNullOrEmpty(ftpDestinationName) ? String.Format("{0}_", ftpDestinationName) : String.Empty,
-				Path.GetFileNameWithoutExtension(fileDescription.FilePath));
+				Path.GetFileNameWithoutExtension(fileDescription.FilePath),
+				fileSetId);
 
 			try
 			{
@@ -72,6 +76,7 @@ namespace DropBoxUploader.Business
 				dropBoxStorage.UploadFile(ftpDestinationFilePath, destinationFolder);
 				dropBoxStorage.UploadFile(new MemoryStream(Encoding.Default.GetBytes(fileDescription.Advertiser)), AdvertiserFileName, destinationFolder);
 				dropBoxStorage.UploadFile(new MemoryStream(Encoding.Default.GetBytes(fileDescription.UserEmail)), EmailFileName, destinationFolder);
+				dropBoxStorage.UploadFile(new MemoryStream(Encoding.Default.GetBytes(fileSetId)), IdFileName, destinationFolder);
 
 				dropBoxStorage.Close();
 			}

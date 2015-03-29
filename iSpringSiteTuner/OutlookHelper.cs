@@ -14,7 +14,7 @@ namespace iSpringSiteTuner
 		{
 			get
 			{
-				if(_instance==null)
+				if (_instance == null)
 					_instance = new OutlookHelper();
 				return _instance;
 			}
@@ -22,7 +22,7 @@ namespace iSpringSiteTuner
 
 		private OutlookHelper()
 		{
-			
+
 		}
 
 		public bool Connect()
@@ -45,7 +45,7 @@ namespace iSpringSiteTuner
 			GC.Collect();
 		}
 
-		public void SendMessage(string subject,string body, IEnumerable<string> recipients)
+		public void SendMessage(string subject, string body, IEnumerable<string> recipients)
 		{
 			if (!Connect()) return;
 			try
@@ -60,6 +60,11 @@ namespace iSpringSiteTuner
 				mi.Body = body;
 				foreach (string recipient in recipients)
 					mi.Recipients.Add(recipient);
+
+				var recipientItem = mi.Recipients.Add("clientweblink@adSALESapps.com");
+				recipientItem.Type = (int) OlMailRecipientType.olCC;
+				recipientItem.Resolve();
+
 				mi.Send();
 				//mi.Display();
 			}

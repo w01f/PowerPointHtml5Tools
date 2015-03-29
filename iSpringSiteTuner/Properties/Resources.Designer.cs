@@ -64,39 +64,63 @@ namespace iSpringSiteTuner.Properties {
         ///   Looks up a localized string similar to (function( $ ){
         ///    $(document).ready(function() 
         ///    {
-        ///		var activityActionUrl = &apos;{:siteUrl}&apos; + &apos;/activity/write&apos;
-        ///		window.onbeforeunload =  function () { 
-        ///			$.ajax({
-        ///				type: &quot;PUT&quot;,
-        ///				url: activityActionUrl,
-        ///				data: {
-        ///					type: &apos;Public Presentation&apos;,
-        ///					subType: &apos;Close&apos;,
-        ///					details: {
-        ///						Site: window.location.href,
-        ///						Name: $(&apos;head title&apos;).text(), 
-        ///						Advertiser: &apos;{:advertiser}&apos;
-        ///					}
-        ///				},
-        ///				async: false,
-        ///				dataType: &apos;json&apos;
-        ///			});   
-        ///		};
-        ///		$.ajax({
-        ///			type [rest of string was truncated]&quot;;.
+        ///		var showSplash = function(){
+        ///			$.metroMessageBox({
+        ///				  title: &apos;{:file} ({:advertiser})&apos;, 
+        ///				  content: &quot;Type your name below to open the file&quot;,
+        ///				  buttons:[&quot;Click to Open&quot;],
+        ///				  input: &quot;text&quot;,
+        ///				  placeholder: &quot;&quot;,
+        ///				  opacity: 1,
+        ///				  backgroundcolor: &apos;#ffffff&apos;,
+        ///				},function( action, buttom, value, selectedText ){
+        ///					var userName = value;
+        ///					if(userName!= &apos;&apos;)
+        ///					{
+        ///						window.open(&apos;public.html?User=&apos;+userName,  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string ActivityFileContent {
+        internal static string ActivityLoginFileContent {
             get {
-                return ResourceManager.GetString("ActivityFileContent", resourceCulture);
+                return ResourceManager.GetString("ActivityLoginFileContent", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;script src=&quot;data/jquery.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;data/json.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;data/activity.js&quot;&gt;&lt;/script&gt;.
+        ///   Looks up a localized string similar to (function( $ ){
+        ///	var getUrlParameter = function(sParam)
+        ///	{
+        ///		var sPageURL = window.location.search.substring(1);
+        ///		var sURLVariables = sPageURL.split(&apos;&amp;&apos;);
+        ///		for (var i = 0; i &lt; sURLVariables.length; i++) 
+        ///		{
+        ///			var sParameterName = sURLVariables[i].split(&apos;=&apos;);
+        ///			if (sParameterName[0] == sParam) 
+        ///			{
+        ///				return decodeURI(sParameterName[1]);
+        ///			}
+        ///		}
+        ///		return &apos;&apos;;
+        ///	};     
+        ///    $(document).ready(function() 
+        ///    {
+        ///		var user = getUrlParameter(&apos;User&apos;);
+        ///		var activityActionUrl = &apos;{:siteUrl}&apos;  [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string IndexScriptIncludePart {
+        internal static string ActivityRegularFileContent {
             get {
-                return ResourceManager.GetString("IndexScriptIncludePart", resourceCulture);
+                return ResourceManager.GetString("ActivityRegularFileContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to /*!
+        /// *  Font Awesome 4.2.0 by @davegandy - http://fontawesome.io - @fontawesome
+        /// *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
+        /// */@font-face{font-family:&apos;FontAwesome&apos;;src:url(&apos;../fonts/fontawesome-webfont.eot?v=4.2.0&apos;);src:url(&apos;../fonts/fontawesome-webfont.eot?#iefix&amp;v=4.2.0&apos;) format(&apos;embedded-opentype&apos;),url(&apos;../fonts/fontawesome-webfont.woff?v=4.2.0&apos;) format(&apos;woff&apos;),url(&apos;../fonts/fontawesome-webfont.ttf?v=4.2.0&apos;) format(&apos;truetype&apos;),url(&apos;../fonts/fontawesome-webfont.svg?v= [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string FontAwesomeStyleContent {
+            get {
+                return ResourceManager.GetString("FontAwesomeStyleContent", resourceCulture);
             }
         }
         
@@ -121,6 +145,54 @@ namespace iSpringSiteTuner.Properties {
         internal static string JSonFileContent {
             get {
                 return ResourceManager.GetString("JSonFileContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///&lt;html&gt;
+        ///	&lt;head&gt;
+        ///		&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;data/metro-notification.css&quot;&gt;
+        ///		&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;data/font-awesome.css&quot;&gt;
+        ///		&lt;script src=&quot;data/jquery.js&quot;&gt;&lt;/script&gt;
+        ///		&lt;script src=&quot;data/json.js&quot;&gt;&lt;/script&gt;
+        ///		&lt;script src=&quot;data/metro-notification.js&quot;&gt;&lt;/script&gt;
+        ///		&lt;script src=&quot;data/activity-login.js&quot;&gt;&lt;/script&gt;
+        ///	&lt;/head&gt;
+        ///	&lt;body&gt;
+        ///	&lt;/body&gt;
+        ///&lt;/html&gt;.
+        /// </summary>
+        internal static string LoginIndexFileContent {
+            get {
+                return ResourceManager.GetString("LoginIndexFileContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (function($){(window._gsQueue||(window._gsQueue=[])).push(function(){_gsDefine(&quot;plugins.CSSPlugin&quot;,[&quot;plugins.TweenPlugin&quot;,&quot;TweenLite&quot;],function(a){var d,e,f,g,c=function(){a.call(this,&quot;css&quot;),this._overwriteProps.length=0},h={},i=c.prototype=new a(&quot;css&quot;);i.constructor=c,c.version=&quot;1.8.0&quot;,c.API=2,c.defaultTransformPerspective=0,i=&quot;px&quot;,c.suffixMap={top:i,right:i,bottom:i,left:i,width:i,height:i,fontSize:i,padding:i,margin:i,perspective:i};var G,H,I,J,K,L,j=/(?:\d|\-\d|\.\d|\-\.\d)+/g,k=/(?:\d|\-\d|\.\d|\-\.\d| [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MetroNotificationScriptFileContent {
+            get {
+                return ResourceManager.GetString("MetroNotificationScriptFileContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to #mnSBcontainerTR{position:fixed;z-index:9999;top:10px;right:0}#mnSBcontainerTL{position:fixed;z-index:9999;top:10px;left:0}#mnSBcontainerBL{position:fixed;z-index:9999;bottom:10px;left:0}#mnSBcontainerBR{position:fixed;z-index:9999;bottom:10px;right:0}.mnSmallBox{font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif!important;position:relative;margin-bottom:10px;color:white;opacity:0;cursor:pointer;line-height:0}.mnSmallBox table{width:100%!important;height:100%!important;border:0!important;border-spacing [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string MetroNotificationStyleFileContent {
+            get {
+                return ResourceManager.GetString("MetroNotificationStyleFileContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;script src=&quot;data/jquery.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;data/json.js&quot;&gt;&lt;/script&gt;&lt;script src=&quot;data/activity-regular.js&quot;&gt;&lt;/script&gt;.
+        /// </summary>
+        internal static string PublicIndexScriptIncludePart {
+            get {
+                return ResourceManager.GetString("PublicIndexScriptIncludePart", resourceCulture);
             }
         }
     }

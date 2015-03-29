@@ -28,7 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.styleController = new DevExpress.XtraEditors.StyleController();
+			this.components = new System.ComponentModel.Container();
+			this.styleController = new DevExpress.XtraEditors.StyleController(this.components);
 			this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
 			this.simpleButtonSend = new DevExpress.XtraEditors.SimpleButton();
 			this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
@@ -38,6 +39,7 @@
 			this.textEditEmail2 = new DevExpress.XtraEditors.TextEdit();
 			this.labelControlFileName = new DevExpress.XtraEditors.LabelControl();
 			this.textEditHidden = new DevExpress.XtraEditors.TextEdit();
+			this.labelControlFileSizeWarning = new DevExpress.XtraEditors.LabelControl();
 			((System.ComponentModel.ISupportInitialize)(this.styleController)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
@@ -80,14 +82,14 @@
 			this.ribbonControl.ShowExpandCollapseButton = DevExpress.Utils.DefaultBoolean.False;
 			this.ribbonControl.ShowPageHeadersMode = DevExpress.XtraBars.Ribbon.ShowPageHeadersMode.Hide;
 			this.ribbonControl.ShowToolbarCustomizeItem = false;
-			this.ribbonControl.Size = new System.Drawing.Size(437, 32);
+			this.ribbonControl.Size = new System.Drawing.Size(492, 32);
 			this.ribbonControl.Toolbar.ShowCustomizeItem = false;
 			this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
 			// 
 			// simpleButtonSend
 			// 
 			this.simpleButtonSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.simpleButtonSend.Location = new System.Drawing.Point(303, 299);
+			this.simpleButtonSend.Location = new System.Drawing.Point(358, 329);
 			this.simpleButtonSend.Name = "simpleButtonSend";
 			this.simpleButtonSend.Size = new System.Drawing.Size(122, 37);
 			this.simpleButtonSend.StyleController = this.styleController;
@@ -114,7 +116,7 @@
 			this.labelControlTitle.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
 			this.labelControlTitle.Location = new System.Drawing.Point(110, 39);
 			this.labelControlTitle.Name = "labelControlTitle";
-			this.labelControlTitle.Size = new System.Drawing.Size(315, 69);
+			this.labelControlTitle.Size = new System.Drawing.Size(370, 69);
 			this.labelControlTitle.StyleController = this.styleController;
 			this.labelControlTitle.TabIndex = 1;
 			this.labelControlTitle.Text = "<size=+5>Create an <b>HTML5 Web Link</b> for</size>\r\n<size=+5>your Client Present" +
@@ -124,11 +126,11 @@
 			// 
 			this.textEditAdvertiser.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textEditAdvertiser.Location = new System.Drawing.Point(12, 169);
+			this.textEditAdvertiser.Location = new System.Drawing.Point(12, 191);
 			this.textEditAdvertiser.MenuManager = this.ribbonControl;
 			this.textEditAdvertiser.Name = "textEditAdvertiser";
 			this.textEditAdvertiser.Properties.NullText = "Type the Advertiser name here...";
-			this.textEditAdvertiser.Size = new System.Drawing.Size(413, 22);
+			this.textEditAdvertiser.Size = new System.Drawing.Size(468, 22);
 			this.textEditAdvertiser.StyleController = this.styleController;
 			this.textEditAdvertiser.TabIndex = 3;
 			this.textEditAdvertiser.Validating += new System.ComponentModel.CancelEventHandler(this.textEditAdvertiser_Validating);
@@ -137,11 +139,11 @@
 			// 
 			this.textEditEmail1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textEditEmail1.Location = new System.Drawing.Point(12, 225);
+			this.textEditEmail1.Location = new System.Drawing.Point(12, 247);
 			this.textEditEmail1.MenuManager = this.ribbonControl;
 			this.textEditEmail1.Name = "textEditEmail1";
 			this.textEditEmail1.Properties.NullText = "Type your email address here...";
-			this.textEditEmail1.Size = new System.Drawing.Size(413, 22);
+			this.textEditEmail1.Size = new System.Drawing.Size(468, 22);
 			this.textEditEmail1.StyleController = this.styleController;
 			this.textEditEmail1.TabIndex = 4;
 			this.textEditEmail1.Validating += new System.ComponentModel.CancelEventHandler(this.textEditEmail1_Validating);
@@ -150,11 +152,11 @@
 			// 
 			this.textEditEmail2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.textEditEmail2.Location = new System.Drawing.Point(12, 253);
+			this.textEditEmail2.Location = new System.Drawing.Point(12, 275);
 			this.textEditEmail2.MenuManager = this.ribbonControl;
 			this.textEditEmail2.Name = "textEditEmail2";
 			this.textEditEmail2.Properties.NullText = "Type your email address AGAIN...";
-			this.textEditEmail2.Size = new System.Drawing.Size(413, 22);
+			this.textEditEmail2.Size = new System.Drawing.Size(468, 22);
 			this.textEditEmail2.StyleController = this.styleController;
 			this.textEditEmail2.TabIndex = 5;
 			this.textEditEmail2.Validating += new System.ComponentModel.CancelEventHandler(this.textEditEmail2_Validating);
@@ -162,12 +164,16 @@
 			// labelControlFileName
 			// 
 			this.labelControlFileName.AllowHtmlString = true;
+			this.labelControlFileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelControlFileName.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+			this.labelControlFileName.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
 			this.labelControlFileName.Location = new System.Drawing.Point(12, 128);
 			this.labelControlFileName.Name = "labelControlFileName";
-			this.labelControlFileName.Size = new System.Drawing.Size(126, 19);
+			this.labelControlFileName.Size = new System.Drawing.Size(468, 57);
 			this.labelControlFileName.StyleController = this.styleController;
 			this.labelControlFileName.TabIndex = 2;
-			this.labelControlFileName.Text = "<size=+2><b>Presentation:</b> {0}</size>";
+			this.labelControlFileName.Text = "<size=+2><b>Presentation:</b> {0} <b>({1})</b></size>";
 			// 
 			// textEditHidden
 			// 
@@ -177,11 +183,26 @@
 			this.textEditHidden.Size = new System.Drawing.Size(10, 20);
 			this.textEditHidden.TabIndex = 0;
 			// 
+			// labelControlFileSizeWarning
+			// 
+			this.labelControlFileSizeWarning.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.labelControlFileSizeWarning.Appearance.ForeColor = System.Drawing.Color.Red;
+			this.labelControlFileSizeWarning.Appearance.TextOptions.WordWrap = DevExpress.Utils.WordWrap.Wrap;
+			this.labelControlFileSizeWarning.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+			this.labelControlFileSizeWarning.Location = new System.Drawing.Point(12, 329);
+			this.labelControlFileSizeWarning.Name = "labelControlFileSizeWarning";
+			this.labelControlFileSizeWarning.Size = new System.Drawing.Size(327, 37);
+			this.labelControlFileSizeWarning.StyleController = this.styleController;
+			this.labelControlFileSizeWarning.TabIndex = 8;
+			this.labelControlFileSizeWarning.Text = "This file is pretty BIG. It may take longer to upload this file to the server.";
+			// 
 			// FormFileDescription
 			// 
 			this.Appearance.Options.UseFont = true;
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(437, 348);
+			this.ClientSize = new System.Drawing.Size(492, 378);
+			this.Controls.Add(this.labelControlFileSizeWarning);
 			this.Controls.Add(this.textEditHidden);
 			this.Controls.Add(this.labelControlFileName);
 			this.Controls.Add(this.textEditEmail2);
@@ -226,5 +247,6 @@
 		private DevExpress.XtraEditors.TextEdit textEditEmail2;
 		private DevExpress.XtraEditors.LabelControl labelControlFileName;
 		private DevExpress.XtraEditors.TextEdit textEditHidden;
+		private DevExpress.XtraEditors.LabelControl labelControlFileSizeWarning;
 	}
 }

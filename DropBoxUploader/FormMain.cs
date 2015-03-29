@@ -13,7 +13,6 @@ namespace DropBoxUploader
 		private const string PowerPointExtension = ".pptx";
 		private const string PowerPointExtensionLegacy = ".ppt";
 
-		private bool _firstClose = true;
 		public FormMain()
 		{
 			InitializeComponent();
@@ -21,20 +20,22 @@ namespace DropBoxUploader
 
 		private async void UploadFile(FileDescription fileDescription)
 		{
-			Invoke(new MethodInvoker(() =>
-			{
-				pnProgress.BringToFront();
-				ShowTooltip(String.Format("Start uploading {0}...", fileDescription.FilePath));
-			}));
+			Invoke(new MethodInvoker(() => pnProgress.BringToFront()));
 			var result = false;
 			await Task.Run(() => result = DropBoxManager.Instance.UploadFile(fileDescription));
 			Invoke(new MethodInvoker(() =>
 			{
 				simpleButtonUpload.BringToFront();
 				if (result)
-					ShowTooltip(String.Format("{0} uploaded...", fileDescription.FilePath));
+				{
+					using (var form = new FormSuccess(fileDescription.Advertiser))
+					{
+						form.ShowDialog();
+						Close();
+					}
+				}
 				else
-					ShowTooltip(String.Format("Error occured while uploading {0}. Try again or contact your system administrator...", fileDescription.FilePath), ToolTipIcon.Warning);
+					MessageBox.Show("Error occured while uploading file. Contanct your system adminisrator.", "ClientWebLink", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}));
 		}
 
@@ -81,49 +82,11 @@ namespace DropBoxUploader
 			UploadFile(fileDescription);
 		}
 
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Application.Exit();
-		}
-
 		#region Form Visualization
 		private void FormMain_Shown(object sender, EventArgs e)
 		{
 			Left = Screen.PrimaryScreen.Bounds.Right - Width - 10;
 			Top = Screen.PrimaryScreen.Bounds.Bottom - Height - 40;
-		}
-
-		private void FormMain_ClientSizeChanged(object sender, EventArgs e)
-		{
-			if (WindowState == FormWindowState.Minimized)
-				ShowInTaskbar = false;
-			else
-				ShowInTaskbar = true;
-		}
-
-		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (e.CloseReason != CloseReason.UserClosing) return;
-			e.Cancel = true;
-			WindowState = FormWindowState.Minimized;
-			if (_firstClose)
-			{
-				ShowTooltip("Click on tray icon to show window...");
-				_firstClose = false;
-			}
-		}
-
-		private void notifyIcon_MouseClick(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-				WindowState = FormWindowState.Normal;
-		}
-
-		public void ShowTooltip(string tooltipText, ToolTipIcon icon = ToolTipIcon.Info)
-		{
-			notifyIcon.BalloonTipIcon = icon;
-			notifyIcon.BalloonTipText = tooltipText;
-			notifyIcon.ShowBalloonTip(2000);
 		}
 		#endregion
 	}

@@ -80,6 +80,13 @@
   <ItemGroup>
     <Compile Include="Business\DropBoxManager.cs" />
     <Compile Include="Business\FileDescription.cs" />
+    <Compile Include="Business\RandomIdGenerator .cs" />
+    <Compile Include="FormSuccess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSuccess.Designer.cs">
+      <DependentUpon>FormSuccess.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormFileDescription.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +102,9 @@
     <Compile Include="Interops\WinAPIHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormSuccess.resx">
+      <DependentUpon>FormSuccess.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormFileDescription.resx">
       <DependentUpon>FormFileDescription.cs</DependentUpon>
     </EmbeddedResource>
