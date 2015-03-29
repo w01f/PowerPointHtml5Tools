@@ -16,12 +16,17 @@
 			$details['Advertiser'] = str_replace("\'", "'", $details['Advertiser']);
 			if (isset($notificationRecipients) && $notificationRecipients != '')
 			{
+				$userInfo = '';
+				if (array_key_exists('User', $details) && $details['User'] != '')
+					$userInfo = '<br>Logged in as: ' . $details['User'];
+
 				$ip = Yii::app()->request->getUserHostAddress();
 				$message = Yii::app()->email;
 				$message->to = explode(";", $notificationRecipients);
 				$message->subject = $details['Advertiser'];
 				$message->from = Yii::app()->params['email']['from'];
 				$message->message = 'Someone just viewed your client presentation for: ' . $details['Advertiser'] .
+					$userInfo .
 					'<br>IP Address: ' . $ip;
 				$message->send();
 			}
